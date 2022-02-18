@@ -1,12 +1,11 @@
-package aplicacao;
+package aplicacao.util;
 
 public class Util {
 	
-	protected boolean definirOpcao(char Y){
+	public boolean definirOpcao(char Y){
 		char  y = Y;
 		boolean opcao = true;
-		
-		if (y != 'y' ){
+		if (y != 'i' ){
 		 	opcao = false;
 		}
 	return opcao;	 

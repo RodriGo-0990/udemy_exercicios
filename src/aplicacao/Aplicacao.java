@@ -4,81 +4,68 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Scanner;
+import aplicacao.entity.Cliente;
+import aplicacao.entity.ClienteCompany;
+import aplicacao.entity.ClienteIndividual;
+import aplicacao.util.Util;
 
-public class Aplicacao {
+public class Aplicacao   {
 
 	public static void main(String[] args){
 
 		Locale.setDefault(Locale.US);
 		Scanner sc = new Scanner(System.in);
-		Cliente[] arrayContas = new Cliente[3];
 		List<Cliente> listaClientes = new ArrayList<>();
+		System.out.print("ENTER WHIT NUMBER OF CLIENTS: ");
+		int N = sc.nextInt();
 		
-		for (int i = 0; i < arrayContas.length; i++) {
+		for (int i = 1 ; i <= N ; i++) {
+			System.out.print("ENTER WITH ACCOUNTER HOLDER: ");
+			String nomeCliente = sc.next();
 			
-		
-		System.out.println("\nENTER WITH ACCOUNTER NUMBER: ");
-		int numeroConta = sc.nextInt(); 
-		System.out.println("ENTER WITH ACCOUNTER HOLDER: ");
-		sc.nextLine();
-		String nomeCliente = sc.nextLine();
-		System.out.println("ENTER WITH INITIAL DEPOSIT?:  Y or N ");
-		Util util = new Util();
-		char opcao = sc.next().charAt(0);
-		util.definirOpcao(opcao);
-		
-			if(util.definirOpcao(opcao)){
-				System.out.println("ENTER WITH VALUE: ");	
+			System.out.print("ENTER WITH ACCOUNTER cpf/cnpj: ");
+			int cpf = sc.nextInt();
+			
+			System.out.println("INDIVIDUAL OR COMPANY:  i or c ");
+			
 				sc.nextLine();
-				double valor = sc.nextDouble();
-				Cliente cliente = new Cliente(numeroConta, nomeCliente, valor );
-				System.out.println(cliente);
-				listaClientes.add(cliente);
-				
-				System.out.println("\nDO A NEW OPERATION?:  Y or N ");
-				sc.nextLine();
-				char _opcao = sc.next().charAt(0);
-				util.definirOpcao(_opcao);
-				
-				if(util.definirOpcao(_opcao)){
-					System.out.println("ENTER WITH VALUE: ");	
-					sc.nextLine();
-					double valor_ = sc.nextDouble();
-					cliente.sacar(valor_);
-					System.out.println(cliente);
-					}
-				
-			}else{
-				Cliente cliente_ = new Cliente(numeroConta, nomeCliente);
-				System.out.println(cliente_);
-				listaClientes.add(cliente_);
-				System.out.println("\nDO A NEW OPERATION?:  Y or N ");
-				sc.nextLine();
-				char opcao_ = sc.next().charAt(0);
-				util.definirOpcao(opcao_);
-						
-					if(util.definirOpcao(opcao_)){
-							 
-						System.out.println("ENTER WITH VALUE: ");	
-						sc.nextLine();
-						double valor_ = sc.nextDouble();
-						cliente_.sacar(valor_);	
-						System.out.println(cliente_);
-					};
+				Util util = new Util();
+				char opcao = sc.next().charAt(0);
+				util.definirOpcao(opcao);
 					
-						System.out.println(cliente_);
-								
-		
-			}
+					if(util.definirOpcao(opcao)){
+						
+						System.out.println("ENTER WITH INCOME VALUE: ");	
+						sc.nextLine();
+						Double valor = sc.nextDouble(); 
+						
+						System.out.println("ENTER WITH HEALTH EXPENDITURE VALUE: ");	
+						sc.nextLine();
+						Double valor_ = sc.nextDouble();
+						
+						Cliente cliente = new ClienteIndividual(nomeCliente, cpf, valor, valor_);
+						listaClientes.add(cliente);
+						}
+						
+					else{
+						
+						System.out.println("ENTER WITH INCOME VALUE: ");	
+						sc.nextLine();
+						Double valor = sc.nextDouble(); 
+						
+						System.out.println("ENTER WITH EMPLOYERS NUMBER: ");	
+						sc.nextLine();
+						int employes = sc.nextInt();
+						
+					Cliente cliente_ = new ClienteCompany(nomeCliente, cpf, valor, employes);
+					listaClientes.add(cliente_);
+				}
 			
-		}
+		}sc.close();
 		
+		System.out.println("\n---FIM----");
 		
-		
-			sc.close();
-			System.out.println("\n---FIM----");
-		
-		//exibir dados de todas as contas.
+		//exibir dados de todas os clientes.
 		
 		for (Cliente obj : listaClientes) {
 			System.out.println(obj);
