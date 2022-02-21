@@ -4,24 +4,24 @@ import aplicacao.util.operationsAccount;
 
 public abstract class Account  {
 	
-	private static int NUMERO_DA_CONTA;
+	private int NUMERO_DA_CONTA;
 	private Cliente cliente;
 	private operationsAccount operacoes;
 	private Double saldo;
 	
-	public Account() {
-	
+	public Account(Cliente cliente, int numero_da_conta) {
+		this.cliente = cliente;
+		this.NUMERO_DA_CONTA = numero_da_conta;
 	}
 	
 	public Account(Cliente cliente, operationsAccount operacoes, Double saldo) {
-		super();
 		this.cliente = cliente;
 		this.operacoes = operacoes;
 		this.saldo = saldo;
 	}
 
 
-	public static int getNUMERO_DA_CONTA() {
+	public int getNUMERO_DA_CONTA() {
 		return NUMERO_DA_CONTA;
 	}
 	
@@ -44,8 +44,6 @@ public abstract class Account  {
 	protected abstract void sacar(Double valor);
 	
 	protected abstract void depositar(Double valor);
-	
-	protected abstract void cancelar(Cliente cliente);
 
 }
 

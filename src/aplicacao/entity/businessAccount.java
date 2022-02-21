@@ -1,52 +1,59 @@
 package aplicacao.entity;
 
-import javax.security.auth.login.AccountException;
-
-import aplicacao.util.operationsAccount;
+import aplicacao.Exceptions.AccountExceptions;
 
 public final class businessAccount extends Account{
-		private static operationsAccount operacoes;
-		private final Double MAX_SAQUE_ = 500.00;
 		private Double saldo;
-		public businessAccount(int NUMERO_DA_CONTA, ClienteCompany cliente, Double saldo){
-			super(cliente, operacoes, saldo);
+		private final Double MAX_SAQUE_ = 500.00;
+		public businessAccount(int NUMERO_DA_CONTA, ClienteCompany cliente){
+			super(cliente, NUMERO_DA_CONTA);
+			this.saldo = 0.0;
+			
 		}
 		
-		private void validarSaque(Double amount) throws AccountException {
+		public Double getSaldo() {
+			return saldo;
+		}
+
+		private void validarSaque(Double amount) throws AccountExceptions {
 			if(amount > MAX_SAQUE_) {
-				throw new AccountException("LIMITE DE SAQUE EXCEDIDO!!");
-			}if(amount > saldo) {
-				throw new AccountException("SALDO INSUFICIENTE!!");
+				throw new AccountExceptions("LIMITE DE SAQUE EXCEDIDO!!");
+			}if(amount > this.saldo) {
+				throw new AccountExceptions("SALDO INSUFICIENTE!!");
 			}
+		}
+		
+		public String ExibirSaldo() {
+			return ("balance: $"+ this.saldo);
 		}
 		
 		
 
 		@Override
-		protected void depositar(Double valor) {
-			businessAccount.operacoes = operationsAccount.DEPOSITO;
+		public void depositar(Double valor) {
+			
 			this.saldo += valor;
 		}
 		
 		@Override
-		protected void sacar(Double valor){
+		public void sacar(Double valor){
 			try {
 				validarSaque(valor);
-				businessAccount.operacoes = operationsAccount.SAQUE;
 				this.saldo -= valor;
 				
-			} catch (AccountException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			} catch (AccountExceptions e) {
+				e.getMessage();
 			}
 			
 		}
-		
+
 		@Override
-		protected void cancelar(Cliente cliente) {
-			businessAccount.operacoes = operationsAccount.CANCELAMENTO;
+		public String toString() {
+			return "businessAccount: - " + getNUMERO_DA_CONTA() + "\n"+
+					this.getCliente().toString()+
+					this.ExibirSaldo()+"\n"+"------------";
 		}
 
-
+		
 		
 }
