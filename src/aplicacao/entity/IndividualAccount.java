@@ -3,7 +3,7 @@ package aplicacao.entity;
 import aplicacao.Exceptions.AccountExceptions;
 
 
-public class IndividualAccount extends Account{
+public class IndividualAccount extends Account {
 	private Double saldo;
 	private final Double MAX_SAQUE_ = 200.00;
 	public IndividualAccount(int NUMERO_DA_CONTA, ClienteIndividual cliente){
@@ -18,7 +18,7 @@ public class IndividualAccount extends Account{
 	}
 
 
-	private void validarSaque(Double amount) throws AccountExceptions {
+	private void validarSaque(Double amount){
 		if(amount > MAX_SAQUE_) {
 			throw new AccountExceptions("LIMITE DE SAQUE EXCEDIDO!!");
 		}if(amount > this.getSaldo()) {
@@ -38,13 +38,8 @@ public class IndividualAccount extends Account{
 	
 	@Override
 	public void sacar(Double valor){
-		try {
 			validarSaque(valor);
 			this.saldo -= valor;
-			
-		} catch (AccountExceptions e) {
-			e.getMessage();
-		}
 		
 	}
 

@@ -3,6 +3,7 @@ package aplicacao;
 import java.util.Locale;
 import java.util.Scanner;
 
+import aplicacao.Exceptions.AccountExceptions;
 import aplicacao.entity.Account;
 import aplicacao.entity.Bank;
 import aplicacao.entity.Cliente;
@@ -12,7 +13,7 @@ import aplicacao.entity.IndividualAccount;
 import aplicacao.entity.businessAccount;
 import aplicacao.util.Util;
 
-public class Aplicacao   {
+public class Aplicacao  {
 
 	public static void main(String[] args){
 
@@ -56,15 +57,20 @@ public class Aplicacao   {
 						
 						//operações
 						
-						System.out.println("ENTER WHIT NEW DEPOSIT: "); // deposito
+						System.out.println("ENTER WHIT NEW DEPOSIT: "); // depósito
 						Double amount = sc.nextDouble();
 						account.depositar(amount);
 						System.out.println(account.ExibirSaldo());
 						
-						System.out.println("ENTER WHIT WHITDROW AMOUNT: "); // saque
-						amount = sc.nextDouble();
-						account.sacar(amount);
-						System.out.println(account.ExibirSaldo());
+						try {
+							System.out.println("ENTER WHIT WHITDROW AMOUNT: "); // saque
+							amount = sc.nextDouble();
+							account.sacar(amount);
+							System.out.println(account.ExibirSaldo());
+						}catch(AccountExceptions e) {
+							System.out.println(e.getMessage());
+						};
+						
 						
 						//adiciona conta na lista do banco(Bank)
 						bank.Lista_de_contas.add(account);
@@ -95,22 +101,26 @@ public class Aplicacao   {
 					account.depositar(amount);
 					System.out.println(account.ExibirSaldo());
 					
-					System.out.println("ENTER WHIT WHITDROW AMOUNT: "); // saque
-					amount = sc.nextDouble();
-					account.sacar(amount);
-					System.out.println(account.ExibirSaldo());
-					
+					try {
+						System.out.println("ENTER WHIT WHITDROW AMOUNT: "); // saque
+						amount = sc.nextDouble();
+						account.sacar(amount);
+						System.out.println(account.ExibirSaldo());
+						}catch(AccountExceptions e) {
+							System.out.println(e.getMessage());
+						};
+						
 					
 					//adiciona conta na lista do banco(Bank)
 					bank.Lista_de_contas.add(account);
-					
+						
 				}
 			
 		}sc.close();
 		
 		System.out.println("\n----FIM----");
 		
-		//exibir dados de todas os clientes.
+		//exibir dados de todas as contas.
 		
 		for (Account obj : bank.Lista_de_contas) {
 			System.out.println(obj);
